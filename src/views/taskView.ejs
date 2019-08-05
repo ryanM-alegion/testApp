@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+  <% include ../parts/head.ejs %>
+
+  <body>
+    <div id="container">
+      <div id="nav">
+        <% include ../parts/nav.ejs %>
+      </div>
+      <div id="header">
+        <h1>Worker Tasks</h1>
+      </div>
+      <div id="content">
+        <% for(let i = 0; i < tasks.length; i++) { %>
+        <div id="<%=tasks[i].title%>" class="task">
+          <img src="/img/dummyLogo.png" class="taskImg">
+          <h3><%=tasks[i].title%></h3>
+          <h5 id="taskCreated"><%=tasks[i].taskCreated%></h5>
+          <h5 id="taskCreatedBy"><%=tasks[i].taskCreatedBy%></h5>
+          <p>
+            <%=tasks[i].taskDescription%>
+          </p>
+          <div class="readMore">
+            <br>
+            <a href="/tasks/<%=i%>" class="tbLink">
+              <h3>View Task</h3>
+            </a>
+          </div>
+        </div>
+        <%}%>
+
+      </div>
+      <div id="footer">
+
+      </div>
+    </div>
+
+  </body>
+
+</html>
