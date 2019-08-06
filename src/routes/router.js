@@ -1,21 +1,48 @@
 const express = require('express');
 const pageRouter = express.Router();
 const app = express();
+const Mixpanel = require('mixpanel');
+
+const mixpanel = Mixpanel.init('0287b0f799329cfc9fcec61d882b2bed');
+
+pageRouter.route('/index').get((req, res) => {
+	mixpanel.track('Clicked Home Nav', {
+		distinct_id: 'User1',
+		status: 'Succesful Navigation Recorded'
+	});
+	res.render('index');
+});
 
 pageRouter.route('/users').get((req, res) => {
+	mixpanel.track('Clicked Users Nav', {
+		distinct_id: 'User1',
+		status: 'Succesful Navigation Recorded'
+	});
 	res.render('users');
 });
 
 pageRouter.route('/workers').get((req, res) => {
+	mixpanel.track('Clicked Workers Nav', {
+		distinct_id: 'User1',
+		status: 'Succesful Navigation Recorded'
+	});
 	res.render('workers');
 });
 
 pageRouter.route('/taskView').get((req, res) => {
+	mixpanel.track('Clicked Task View Nav', {
+		distinct_id: 'User1',
+		status: 'Succesful Navigation Recorded'
+	});
 	res.render('taskView', { tasks });
 });
 
 pageRouter.route('/:id').get((req, res) => {
 	const { id } = req.params;
+	mixpanel.track('Clicked Nav Task' + tasks[id], {
+		distinct_id: 'User1',
+		"status": 'Succesful Navigation Recorded'
+	});
 	res.render('task', { task: tasks[id] });
 });
 
