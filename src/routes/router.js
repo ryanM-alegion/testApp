@@ -1,21 +1,33 @@
 const express = require('express');
 const pageRouter = express.Router();
 const app = express();
+const chalk = require('chalk');
+const debug = require('debug')('app');
+const morgan = require('morgan');
 const Mixpanel = require('mixpanel');
+
+
+
 
 const mixpanel = Mixpanel.init('0287b0f799329cfc9fcec61d882b2bed');
 
+const user_name = '';
+const user_email = '';
+
+app.use(morgan('tiny'));
+
 pageRouter.route('/index').get((req, res) => {
-	mixpanel.track('Clicked Home Nav', {
-		distinct_id: 'User1',
-		status: 'Succesful Navigation Recorded'
-	});
+	//debug(user_name);
+	//mixpanel.track('Clicked Home Nav', {
+	//	distinct_id: user_name,
+	//	status: 'Succesful Navigation Recorded'
+	//});
 	res.render('index');
 });
 
 pageRouter.route('/users').get((req, res) => {
 	mixpanel.track('Clicked Users Nav', {
-		distinct_id: 'User1',
+		distinct_id: '',
 		status: 'Succesful Navigation Recorded'
 	});
 	res.render('users');
@@ -23,7 +35,7 @@ pageRouter.route('/users').get((req, res) => {
 
 pageRouter.route('/workers').get((req, res) => {
 	mixpanel.track('Clicked Workers Nav', {
-		distinct_id: 'User1',
+		distinct_id: '',
 		status: 'Succesful Navigation Recorded'
 	});
 	res.render('workers');
@@ -31,7 +43,7 @@ pageRouter.route('/workers').get((req, res) => {
 
 pageRouter.route('/taskView').get((req, res) => {
 	mixpanel.track('Clicked Task View Nav', {
-		distinct_id: 'User1',
+		distinct_id: '',
 		status: 'Succesful Navigation Recorded'
 	});
 	res.render('taskView', { tasks });
@@ -39,12 +51,29 @@ pageRouter.route('/taskView').get((req, res) => {
 
 pageRouter.route('/:id').get((req, res) => {
 	const { id } = req.params;
-	mixpanel.track('Clicked Nav Task' + tasks[id], {
-		distinct_id: 'User1',
-		"status": 'Succesful Navigation Recorded'
+	const task = tasks[id];
+	mixpanel.track('Clicked Task Nav', {
+		distinct_id: '',
+		status: 'Succesful Navigation Recorded',
+		taskID: id
 	});
-	res.render('task', { task: tasks[id] });
+	res.render('task', { task });
 });
+
+//pageRouter.route('/sLogin').post((req, res) => {
+//	const user_name = req.body.name;
+//	const user_email = req.body.email;
+//
+//	debug(user_name);
+//	mixpanel.track('Logged User', {
+//		distinct_id: user_name,
+//		User_Email: user_email,
+//		status: 'Succesful Login'
+//	});
+//
+//	res.render('index');
+//	return user_name, user_email;
+//});
 
 
 const tasks = [
